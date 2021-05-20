@@ -51,14 +51,15 @@ def to_rgb(data):
 def get_grid_samples(inputs, targets, outputs):
 
     targets = [to_rgb(target.numpy()) for target in targets]
-    targets = torch.Tensor(targets)
+    targets = torch.Tensor(targets).permute(0,3,1,2)
+
 
     softmax = nn.Softmax(dim=1)
     predictions = softmax(outputs)
     predictions = torch.argmax(predictions, dim=1)
 
     predictions = [to_rgb(prediction.numpy()) for prediction in predictions]
-    predictions = torch.Tensor(predictions)
+    predictions = torch.Tensor(predictions).permute(0,3,1,2)
 
     # 4Dminibatch Tensor of shape(Bx C x H x W)
     if len(targets.shape) == 3:
@@ -68,4 +69,4 @@ def get_grid_samples(inputs, targets, outputs):
     output_grid = torchvision.utils.make_grid(predictions, nrow=config.BATCH_SIZE)
 
 
-    return input_grid.permute(1, 2, 0).numpy(), target_grid.numpy(), output_grid.numpy()
+    return input_grid.permute(1, 2, 0).numpy(), target_grid.permute(1, 2, 0).numpy(), output_grid.permute(1, 2, 0).numpy()
