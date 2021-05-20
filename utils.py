@@ -66,4 +66,4 @@ def get_grid_samples(inputs, targets, outputs):
     target_grid = torchvision.utils.make_grid(targets, nrow=config.BATCH_SIZE)
     output_grid = torchvision.utils.make_grid(predictions, nrow=config.BATCH_SIZE)
 
-    return input_grid, target_grid, output_grid
+    return input_grid.numpy(), target_grid.numpy(), output_grid.numpy()
