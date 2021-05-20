@@ -13,7 +13,7 @@ import torchvision
 
 
 # calculate loss and metrics
-def calculate_loss(loss=config.LOSS_FUNCTION, output, target):
+def calculate_loss(output, target,loss=config.LOSS_FUNCTION):
     if loss == 'cross_entropy_loss':
         return CE_LOSS(output,target)
 

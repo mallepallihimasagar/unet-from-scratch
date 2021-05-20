@@ -128,9 +128,9 @@ def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
         return eval_metrics,
 
 if __name__ == "__main__":
-    loss_function = partial(calculate_loss, config.LOSS_FUNCTION)
+    #loss_function = partial(calculate_loss, config.LOSS_FUNCTION)
     model = get_model(config.MODEL_NAME)
     if device != 'cpu':
         model = model.to(device)
 
-    train_model(model, train_loader, test_loader, loss_function, calculate_metrics, optimizer, scheduler)
+    train_model(model, train_loader, test_loader, calculate_loss, calculate_metrics, optimizer, scheduler)
