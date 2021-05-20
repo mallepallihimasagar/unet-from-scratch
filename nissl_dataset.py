@@ -53,7 +53,7 @@ class NisslDataset(Dataset):
         mask = torch.from_numpy(mask)  # [W, H, C]
         #mask = mask.permute(2, 0, 1)  # [C, W, H]
 
-        return image/255.0, mask
+        return image/255.0, mask.long()
 
 
 if __name__ == '__main__':
