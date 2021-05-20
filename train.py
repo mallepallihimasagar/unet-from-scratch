@@ -57,11 +57,12 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     best_test_loss = 1e+10
     model_weights = model.state_dict()
     loss_fn = nn.CrossEntropyLoss()
+    inputs, target = next(iter(train_loader))
     for epoch in range(config.NUM_EPOCHS):
         running_loss = 0
         # for idx, data in enumerate(train_loader):
         idx = 0
-        inputs, target = next(iter(train_loader))  # data
+        #inputs, target = next(iter(train_loader))  # data
         inputs = inputs.to(device)
         target = target.to(device)
         output = model(inputs)
