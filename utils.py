@@ -48,7 +48,7 @@ def to_rgb(data):
 
 
 def get_grid_samples(inputs, targets, outputs):
-    inputs = inputs.permute(0, 3, 1, 2)
+
     targets = [to_rgb(target.numpy()) for target in targets]
     targets = torch.Tensor(targets)
 
@@ -66,4 +66,4 @@ def get_grid_samples(inputs, targets, outputs):
     target_grid = torchvision.utils.make_grid(targets, nrow=config.BATCH_SIZE)
     output_grid = torchvision.utils.make_grid(predictions, nrow=config.BATCH_SIZE)
 
-    return input_grid.numpy(), target_grid.numpy(), output_grid.numpy()
+    return input_grid.permute(1, 2, 0).numpy(), target_grid.numpy(), output_grid.numpy()
