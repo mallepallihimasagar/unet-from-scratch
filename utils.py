@@ -33,7 +33,7 @@ def calculate_metrics(output,target):
 def get_model(model_name='unet') -> UNet:
     
     if model_name == 'unet':
-        model = UNet(in_channels=3,out_channels=1)
+        model = UNet(in_channels=3, out_channels=4)
         return  model
 
 def to_rgb(data):

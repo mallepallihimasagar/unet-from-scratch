@@ -11,8 +11,8 @@ def CE_LOSS(output, target):
 
 
 if __name__ == '__main__':
-    a = torch.rand(7, 3, 3, 3)
-    b = torch.empty(7, 3, 3, dtype=torch.long).random_(2)
+    a = torch.rand(3, 4, 512, 512)
+    b = torch.empty(3, 512, 512, dtype=torch.long).random_(4)
 
     loss = CE_LOSS(a, b)
 
