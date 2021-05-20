@@ -57,7 +57,9 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     model_weights = model.state_dict()
     for epoch in range(config.NUM_EPOCHS):
         for idx, data in enumerate(train_loader):
-            inputs, target = data.to(device)
+            inputs, target = data
+            inputs = inputs.to(device)
+            target = target.to(device)
             output = model(inputs)
 
             optimizer.zero_grad()
@@ -101,7 +103,9 @@ def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
     dice = 0
     with torch.no_grad():
         for idx, data in enumerate(test_loader):
-            inputs, target = data.to(device)
+            inputs, target = data
+            inputs = inputs.to(device)
+            target = target.to(device)
             output = model(inputs)
 
             optimizer.zero_grad()
