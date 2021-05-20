@@ -1,0 +1,17 @@
+IMG_HEIGHT = 512
+IMG_WIDTH = 512
+TRAIN_DATA_PATH = 'Nissl_Dataset/train'
+TEST_DATA_PATH = 'Nissl_Dataset/test'
+BATCH_SIZE = 4
+LOSS_FUNCTION = 'cross_entropy_loss'
+NUM_EPOCHS = 100
+LEARNING_RATE = 1e-4
+
+USE_WANDB = False
+WANDB_PROJECT_NAME = 'UNet from Scratch'
+
+MODEL_NAME = 'unet'
+PRE_TRAINED = False
+PRETRAINED_PATH = '/PATH TO PRETRAINED MODEL'
+
+MODEL_SAVE_PATH = '/UNET.pt'
