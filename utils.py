@@ -38,7 +38,7 @@ def get_model(model_name='unet') -> UNet:
 
 def to_rgb(data):
     data = data.astype(int)
-    rgb = np.zeros((data.shape[0].data.shape[1],3),dtype=np.uint8)
+    rgb = np.zeros((data.shape[0],data.shape[1],3),dtype=np.uint8)
 
     rgb[data == 1,:] = [255,0,0] #red
     rgb[data == 2, :] = [0, 255, 0]  # green
