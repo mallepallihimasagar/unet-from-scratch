@@ -77,6 +77,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
         metrics = test_model(model, test_loader, loss_function, calc_metrics, scheduler)
+        model.train()
         if metrics["loss"] <= best_test_loss:
             print(f'Saving model at epoch :{epoch + 1}')
             model_weights = model.state_dict()
