@@ -56,10 +56,10 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     best_test_loss = 1e+10
     model_weights = model.state_dict()
     for epoch in range(config.NUM_EPOCHS):
-
-        #for idx, data in enumerate(train_loader):
-        idx=0
-        inputs, target = next(iter(train_loader))#data
+        running_loss = 0
+        # for idx, data in enumerate(train_loader):
+        idx = 0
+        inputs, target = next(iter(train_loader))  # data
         inputs = inputs.to(device)
         target = target.to(device)
         output = model(inputs)
@@ -72,11 +72,12 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
         epoch_loss = running_loss / (idx + 1)
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
-        metrics = test_model(model, test_loader, loss_function, calc_metrics,scheduler)
+        metrics = test_model(model, test_loader, loss_function, calc_metrics, scheduler)
         if metrics["loss"] <= best_test_loss:
             print(f'Saving model at epoch :{epoch + 1}')
             model_weights = model.state_dict()
-        print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Test_loss= {metrics["loss"]}, iou = {metrics["iou_score"]}, dice = {metrics["iou_score"]}')
+        print(
+            f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Test_loss= {metrics["loss"]}, iou = {metrics["iou_score"]}, dice = {metrics["iou_score"]}')
 
         if config.USE_WANDB:
             wandb_dict = {
@@ -98,7 +99,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     print('Training completed')
 
 
-def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
+def test_model(model, test_loader, loss_function, calc_metrics, scheduler):
     model.eval()
     running_loss = 0
     iou = 0
@@ -119,22 +120,23 @@ def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
             dice += metrics["dice_score"]
         scheduler.step(running_loss / (idx + 1))
         input_grid, target_grid, output_grid = get_grid_samples(
-                                                    inputs.cpu(),
-                                                    target.cpu(),
-                                                    output.cpu()
+            inputs.cpu(),
+            target.cpu(),
+            output.cpu()
         )
         eval_metrics = {
             "loss": running_loss / (idx + 1),
             "iou_score": iou / (idx + 1),
             "dice_score": dice / (idx + 1),
             "input_grid": input_grid,
-            "target_grid" : target_grid,
-            "output_grid" : output_grid
+            "target_grid": target_grid,
+            "output_grid": output_grid
         }
         return eval_metrics
 
+
 if __name__ == "__main__":
-    #loss_function = partial(calculate_loss, config.LOSS_FUNCTION)
+    # loss_function = partial(calculate_loss, config.LOSS_FUNCTION)
     model = get_model(config.MODEL_NAME)
     if device != 'cpu':
         model = model.to(device)
