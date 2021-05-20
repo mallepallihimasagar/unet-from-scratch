@@ -49,7 +49,7 @@ def to_rgb(data):
 
 
 def get_grid_samples(inputs, targets, outputs):
-
+    print(input.shape,targets.shape,outputs.shape)
     targets = [to_rgb(target.numpy()) for target in targets]
     targets = torch.Tensor(targets)
 
