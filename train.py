@@ -76,7 +76,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
         if metrics["loss"] <= best_test_loss:
             print(f'Saving model at epoch :{epoch + 1}')
             model_weights = model.state_dict()
-        print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Testset metrics = {metrics}')
+        print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Test_loss= {metrics["loss"]}, iou = {metrics["iou_score"]}, dice = {metrics["iou_score"]}')
 
         if config.USE_WANDB:
             wandb_dict = {
