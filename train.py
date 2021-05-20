@@ -115,8 +115,8 @@ def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
             metrics = calc_metrics(output, target)
 
             running_loss += loss.item()
-            iou += metrics.iou_score
-            dice += metrics.dice_score
+            iou += metrics["iou_score"]
+            dice += metrics["dice_score"]
         scheduler.step(running_loss / (idx + 1))
         input_grid, target_grid, output_grid = get_grid_samples(
                                                     inputs.cpu(),
