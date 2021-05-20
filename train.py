@@ -38,9 +38,7 @@ model = get_model(model_name=config.MODEL_NAME)
 if config.PRE_TRAINED:
     model.load_state_dict(torch.load(config.PRETRAINED_PATH))
 
-# optimizer and scheduler
-optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
-scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, mode='min')
+
 
 # device
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
@@ -51,8 +49,11 @@ if config.USE_WANDB:
 
 
 # training loop
-def train_model(model, train_loader, test_loader, loss_function, calc_metrics,optimizer, scheduler):
+def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
 
+    # optimizer and scheduler
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, mode='min')
 
     model.train()
     running_loss = 0
@@ -148,4 +149,4 @@ if __name__ == "__main__":
     if device != 'cpu':
         model = model.to(device)
 
-    train_model(model, train_loader, test_loader, calculate_loss, calculate_metrics, optimizer, scheduler)
+    train_model(model, train_loader, test_loader, calculate_loss, calculate_metrics)
