@@ -56,17 +56,19 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     best_test_loss = 1e+10
     model_weights = model.state_dict()
     for epoch in range(config.NUM_EPOCHS):
-        for idx, data in enumerate(train_loader):
-            inputs, target = data
-            inputs = inputs.to(device)
-            target = target.to(device)
-            output = model(inputs)
 
-            optimizer.zero_grad()
-            loss = loss_function(output, target)
-            running_loss += loss.item()
-            loss.backward()
-            optimizer.step()
+        #for idx, data in enumerate(train_loader):
+        idx=0
+        inputs, target = next(iter(train_loader))#data
+        inputs = inputs.to(device)
+        target = target.to(device)
+        output = model(inputs)
+
+        optimizer.zero_grad()
+        loss = loss_function(output, target)
+        running_loss += loss.item()
+        loss.backward()
+        optimizer.step()
         epoch_loss = running_loss / (idx + 1)
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
