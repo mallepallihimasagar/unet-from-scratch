@@ -97,6 +97,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
                 "output/predictions": wandb.Image(metrics["output_grid"], caption='output/predictions Batch')
 
             }
+            print("logging to wandb")
             wandb.log(wandb_dict)
 
     print(f'saving best model weights to {config.MODEL_SAVE_PATH}')
