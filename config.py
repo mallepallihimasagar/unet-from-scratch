@@ -7,7 +7,7 @@ LOSS_FUNCTION = 'cross_entropy_loss'
 NUM_EPOCHS = 100
 LEARNING_RATE = 1e-4
 
-USE_WANDB = False
+USE_WANDB = True
 WANDB_PROJECT_NAME = 'UNet from Scratch'
 
 MODEL_NAME = 'unet'

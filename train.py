@@ -58,33 +58,33 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
     running_loss = 0
     best_test_loss = 1e+10
     model_weights = model.state_dict()
-    inputs, target = next(iter(train_loader))
+
     for epoch in range(config.NUM_EPOCHS):
         running_loss = 0
-        # for idx, data in enumerate(train_loader):
         idx = 0
-        # inputs, target = next(iter(train_loader))  # data
-        inputs = inputs.to(device)
-        target = target.to(device)
-        output = model(inputs)
+        for idx, data in enumerate(train_loader):
+            inputs, target = next(iter(train_loader))  # data
+            inputs = inputs.to(device)
+            target = target.to(device)
+            output = model(inputs)
 
-        loss = loss_function(output, target)
+            loss = loss_function(output, target)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
 
         epoch_loss = running_loss / (idx + 1)
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
-        # metrics = test_model(model, test_loader, loss_function, calc_metrics, scheduler)
-        # model.train()
-        # if metrics["loss"] <= best_test_loss:
-        #     print(f'Saving model at epoch :{epoch + 1}')
-        #     model_weights = model.state_dict()
-        # print(
-        #     f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Test_loss= {metrics["loss"]}, iou = {metrics["iou_score"]}, dice = {metrics["iou_score"]}')
+        metrics = test_model(model, test_loader, loss_function, calc_metrics, scheduler)
+        model.train()
+        if metrics["loss"] <= best_test_loss:
+            print(f'Saving model at epoch :{epoch + 1}')
+            model_weights = model.state_dict()
+        print(
+            f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Test_loss= {metrics["loss"]}, iou = {metrics["iou_score"]}, dice = {metrics["iou_score"]}')
 
         if config.USE_WANDB:
             wandb_dict = {
