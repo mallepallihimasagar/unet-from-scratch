@@ -1,10 +1,9 @@
 import os
 import random
-from functools import partial
+from tqdm import tqdm
 
 import numpy as np
 import torch
-import torch.nn as nn
 import wandb
 from torch.utils.data import DataLoader
 
@@ -63,8 +62,9 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
     for epoch in range(config.NUM_EPOCHS):
         running_loss = 0
         idx = 0
-        for idx, data in enumerate(train_loader):
-            inputs, target = next(iter(train_loader))  # data
+        loop = tqdm(train_loader)
+        for idx, data in enumerate(loop):
+            inputs, target = data
             inputs = inputs.to(device)
             target = target.to(device)
             output = model(inputs)
