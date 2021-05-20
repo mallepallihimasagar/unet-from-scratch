@@ -56,6 +56,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
     running_loss = 0
     best_test_loss = 1e+10
     model_weights = model.state_dict()
+    loss_fn = nn.CrossEntropyLoss()
     for epoch in range(config.NUM_EPOCHS):
         running_loss = 0
         # for idx, data in enumerate(train_loader):
@@ -66,7 +67,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
         output = model(inputs)
 
         optimizer.zero_grad()
-        loss = nn.CrossEntropyLoss(output,target)#loss_function(output, target)
+        loss = loss_fn(output, target)#loss_function(output, target)
 
         loss.backward()
         optimizer.step()
