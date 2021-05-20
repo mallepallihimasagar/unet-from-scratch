@@ -38,8 +38,6 @@ model = get_model(model_name=config.MODEL_NAME)
 if config.PRE_TRAINED:
     model.load_state_dict(torch.load(config.PRETRAINED_PATH))
 
-
-
 # device
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
@@ -54,7 +52,6 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
     optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, mode='min')
 
-
     model.train()
     running_loss = 0
     best_test_loss = 1e+10
@@ -65,19 +62,19 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
         running_loss = 0
         # for idx, data in enumerate(train_loader):
         idx = 0
-        #inputs, target = next(iter(train_loader))  # data
+        # inputs, target = next(iter(train_loader))  # data
         inputs = inputs.to(device)
         target = target.to(device)
         output = model(inputs)
 
-        optimizer.zero_grad()
-        loss = loss_fn(output, target)#loss_function(output, target)
+        loss = loss_fn(output, target)  # loss_function(output, target)
 
+        optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
 
-        epoch_loss = running_loss #/ (idx + 1)
+        epoch_loss = running_loss / (idx + 1)
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
         # metrics = test_model(model, test_loader, loss_function, calc_metrics, scheduler)
