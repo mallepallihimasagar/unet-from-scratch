@@ -59,7 +59,7 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics):
     running_loss = 0
     best_test_loss = 1e+10
     model_weights = model.state_dict()
-
+    print("Training Started")
     for epoch in range(config.NUM_EPOCHS):
         running_loss = 0
         idx = 0
