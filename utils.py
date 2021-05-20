@@ -9,6 +9,7 @@ import numpy as np
 import torch.nn as nn
 import torch
 import torchvision
+import matplotlib.pyplot as plt
 
 
 # calculate loss and metrics
@@ -66,4 +67,8 @@ def get_grid_samples(inputs, targets, outputs):
     target_grid = torchvision.utils.make_grid(targets, nrow=config.BATCH_SIZE)
     output_grid = torchvision.utils.make_grid(predictions, nrow=config.BATCH_SIZE)
 
+    print(input_grid.permute(1, 2, 0).shape,target_grid.shape,output_grid.shape)
+    plt.imshow(input_grid.permute(1, 2, 0).numpy())
+    plt.imshow(target_grid.numpy())
+    plt.imshow(output_grid.numpy())
     return input_grid.permute(1, 2, 0).numpy(), target_grid.numpy(), output_grid.numpy()
