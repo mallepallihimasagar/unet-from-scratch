@@ -46,6 +46,7 @@ device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 # intialize wandb
 if config.USE_WANDB:
     wandb.init(project=f'{config.WANDB_PROJECT_NAME if config.WANDB_PROJECT_NAME else config.MODEL_NAME}')
+    print("WAND INITIALISED")
 
 
 # training loop
