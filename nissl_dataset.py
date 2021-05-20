@@ -11,7 +11,7 @@ import config
 
 
 class NisslDataset(Dataset):
-    def __init__(self, root_dir='Nissl_Dataset', transform=True):
+    def __init__(self, root_dir='Nissl_Dataset/train', transform=True):
         self.root_dir = root_dir
         self.transform = transform
         self.transforms = A.Compose([
