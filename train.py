@@ -4,6 +4,7 @@ from functools import partial
 
 import numpy as np
 import torch
+import torch.nn as nn
 import wandb
 from torch.utils.data import DataLoader
 
@@ -65,10 +66,12 @@ def train_model(model, train_loader, test_loader, loss_function, calc_metrics, o
         output = model(inputs)
 
         optimizer.zero_grad()
-        loss = loss_function(output, target)
-        running_loss += loss.item()
+        loss = nn.CrossEntropyLoss(output,target)#loss_function(output, target)
+
         loss.backward()
         optimizer.step()
+        running_loss += loss.item()
+
         epoch_loss = running_loss / (idx + 1)
         print(f'Epoch {epoch + 1}/{config.NUM_EPOCHS} - Training Loss = {epoch_loss}')
 
