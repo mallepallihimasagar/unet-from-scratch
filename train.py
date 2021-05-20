@@ -131,7 +131,7 @@ def test_model(model, test_loader, loss_function, calc_metrics,scheduler):
             "target_grid" : target_grid,
             "output_grid" : output_grid
         }
-        return eval_metrics,
+        return eval_metrics
 
 if __name__ == "__main__":
     #loss_function = partial(calculate_loss, config.LOSS_FUNCTION)
