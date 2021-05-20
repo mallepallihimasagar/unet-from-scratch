@@ -37,14 +37,13 @@ model = get_model(model_name=config.MODEL_NAME)
 if config.PRE_TRAINED:
     model.load_state_dict(torch.load(config.PRETRAINED_PATH))
 
-
-
 # device
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
 
 # intialize wandb
 if config.USE_WANDB:
-    wandb.init(project=f'{config.WANDB_PROJECT_NAME if config.WANDB_PROJECT_NAME else config.MODEL_NAME}')
+    wandb.init(project=f'{config.WANDB_PROJECT_NAME if config.WANDB_PROJECT_NAME else config.MODEL_NAME}',
+               name=config.MODEL_NAME)
     print("WAND INITIALISED")
 
 
